@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -17,8 +19,13 @@ namespace gameSite.Models
             return userIdentity;
         }
 
-        //custom fields
-        public int MyProperty { get; set; }
+        // Custom Fields
+        [Required]
+        [DefaultValue(100)]
+        public int Caps { get; set; }
+        [Required]
+        [DefaultValue("false")]
+        public bool IsBanned { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

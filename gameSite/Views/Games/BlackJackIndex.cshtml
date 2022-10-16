@@ -1,0 +1,29 @@
+﻿@model gameSite.Models.BlackJackViewModel
+@{
+    ViewBag.Title = "BlackJackIndex";
+}
+<div class="jumbotron">
+    <h1>Round: @Model.Round</h1>
+    <p class="lead">Current Player Count: </p>
+    <p class="lead">Current Bet: </p>
+    <p class="lead">Current House Count: </p>
+</div>
+@*player actions*@
+
+<div class="row">
+    <div class="col-md-4">
+        <p class="btn btn-default">@Html.ActionLink("Play Game", "BlackJackIndex", "Games")</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <p class="btn btn-default">@Html.ActionLink("Play Game", "BlackJackIndex", "Games")</p>
+    </div>
+</div>
+@*betting options*@
+<div class="row">
+    <div class="col-md-4">
+        <p class="btn btn-default">@Html.ActionLink("Place Bet", "BlackJackIndex", "Games")</p>
+        <p class="btn btn-default">@Html.ActionLink("Double Down", "BlackJackIndex", "Games")</p>
+    </div>
+</div>
