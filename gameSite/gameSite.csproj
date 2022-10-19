@@ -182,6 +182,22 @@
     <Compile Include="Migrations\202210110218365_AddedPropIsBannedAndCapsToUsers.Designer.cs">
       <DependentUpon>202210110218365_AddedPropIsBannedAndCapsToUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202210191813061_addedRolesToUsers.cs" />
+    <Compile Include="Migrations\202210191813061_addedRolesToUsers.Designer.cs">
+      <DependentUpon>202210191813061_addedRolesToUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210191822027_addedAdminAccount.cs" />
+    <Compile Include="Migrations\202210191822027_addedAdminAccount.Designer.cs">
+      <DependentUpon>202210191822027_addedAdminAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210191830391_addedAdminAccountToAdminRole.cs" />
+    <Compile Include="Migrations\202210191830391_addedAdminAccountToAdminRole.Designer.cs">
+      <DependentUpon>202210191830391_addedAdminAccountToAdminRole.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210191833391_seededMultipleUsers.cs" />
+    <Compile Include="Migrations\202210191833391_seededMultipleUsers.Designer.cs">
+      <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BlackJackViewModel.cs" />
@@ -271,6 +287,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210110218365_AddedPropIsBannedAndCapsToUsers.resx">
       <DependentUpon>202210110218365_AddedPropIsBannedAndCapsToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210191813061_addedRolesToUsers.resx">
+      <DependentUpon>202210191813061_addedRolesToUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210191822027_addedAdminAccount.resx">
+      <DependentUpon>202210191822027_addedAdminAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210191830391_addedAdminAccountToAdminRole.resx">
+      <DependentUpon>202210191830391_addedAdminAccountToAdminRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210191833391_seededMultipleUsers.resx">
+      <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
