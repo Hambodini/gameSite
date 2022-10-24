@@ -15,24 +15,11 @@ namespace gameSite.Controllers
         {
             BlackJackViewModel Model = new BlackJackViewModel();
 
-            Random rnd = new Random();
+            Model.HouseCount = 0;
+            Model.HouseCardDrawn = "nothing";
 
-            //draw a card for the house
-            int amountOfCards = Model.Cards.Count - 1;
-            int randomNumber = rnd.Next(0, amountOfCards);
-            String card = Model.Cards[randomNumber].ToString();
-            Model.HouseCount = Model.FindValue(card);
-            Model.Cards.RemoveAt(randomNumber);
-
-            //draw a card for the player
-            amountOfCards = Model.Cards.Count - 1;
-            randomNumber = rnd.Next(0, amountOfCards);
-            card = Model.Cards[randomNumber].ToString();
-            Model.PlayerCount = Model.FindValue(card);
-            Model.Cards.RemoveAt(randomNumber);
-
-            amountOfCards = Model.Cards.Count - 1;
-
+            Model.PlayerCount = 0;
+            Model.PlayerCardDrawn = "nothing";
 
             Model.Round = 1;
             return View(Model);
@@ -41,36 +28,8 @@ namespace gameSite.Controllers
         public ActionResult BlackJackIndex(BlackJackViewModel Model)
         {
             String action = Request["action"];
-            if (action == "draw")
-            {
-                Model.Round++;
-
-                Random rnd = new Random();
-
-                //draw a card for the house
-                int amountOfCards = Model.Cards.Count - 1;
-                int randomNumber = rnd.Next(0, amountOfCards);
-                String card = Model.Cards[randomNumber].ToString();
-                Model.HouseCount = Model.FindValue(card);
-                Model.Cards.RemoveAt(randomNumber);
-
-                //draw a card for the player
-                amountOfCards = Model.Cards.Count - 1;
-                randomNumber = rnd.Next(0, amountOfCards);
-                card = Model.Cards[randomNumber].ToString();
-                Model.PlayerCount = Model.FindValue(card);
-                Model.Cards.RemoveAt(randomNumber);
-
-                if (Model.PlayerCount > 21)
-                {
-                    Model.DidPlayerWin = false;
-                } else if (Model.HouseCount > 21)
-                {
-                    Model.DidPlayerWin = true;
-                }
-
-            }
-            else if (action == "stand")
+            
+            if (action == "stand")
             {
                 Model.Round++;
                 Model.DidPlayerStand = true;
@@ -81,16 +40,11 @@ namespace gameSite.Controllers
                 int amountOfCards = Model.Cards.Count - 1;
                 int randomNumber = rnd.Next(0, amountOfCards);
                 String card = Model.Cards[randomNumber].ToString();
-                Model.HouseCount = Model.FindValue(card);
                 Model.Cards.RemoveAt(randomNumber);
 
-                if (Model.HouseCount > Model.PlayerCount)
-                {
-                    Model.DidPlayerWin = false;
-                } else
-                {
-                    Model.DidPlayerWin = true;
-                }
+                //add value to house set card drawn
+                Model.HouseCardDrawn = card;
+                Model.HouseCount += Model.FindValue(card);
 
             } else if (action == "bet")
             {
@@ -119,7 +73,47 @@ namespace gameSite.Controllers
                     Model.DidPlayerDoubleDown = true;
                 }
             }
+
+            if (Model.HouseCount > Model.PlayerCount)
+            {
+                Model.DidPlayerWin = false;
+            }
+            else
+            {
+                Model.DidPlayerWin = true;
+            }
+
             return View(Model);
+        }
+        public ActionResult BlackJackDraw(BlackJackViewModel Model)
+        {
+            
+            Model.Round++;
+
+            Random rnd = new Random();
+
+            //draw a card for the house
+            int amountOfCards = Model.Cards.Count - 1;
+            int randomNumber = rnd.Next(0, amountOfCards);
+            String card = Model.Cards[randomNumber].ToString();
+            Model.Cards.RemoveAt(randomNumber);
+
+            //add value to house set card drawn
+            Model.HouseCardDrawn = card;
+            Model.HouseCount += Model.FindValue(card);
+
+            //draw a card for the player
+            amountOfCards = Model.Cards.Count - 1;
+            randomNumber = rnd.Next(0, amountOfCards);
+            card = Model.Cards[randomNumber].ToString();
+            Model.Cards.RemoveAt(randomNumber);
+
+            //add value to player and set card drawn
+            Model.PlayerCardDrawn = card;
+            Model.PlayerCount += Model.FindValue(card);
+
+            return View("BlackJackIndex", Model);
+
         }
     }
 }

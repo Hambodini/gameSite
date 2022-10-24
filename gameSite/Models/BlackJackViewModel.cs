@@ -21,6 +21,8 @@ namespace gameSite.Models
         public int PlayerCount { get; set; }
         public int HouseCount { get; set; }
         public  List<String> Cards { get; set; }
+        public string HouseCardDrawn { get; set; }
+        public string PlayerCardDrawn { get; set; }
         public bool DidPlayerWin { get; set; }
         public bool DidPlayerStand { get; set; }
         public bool DidPlayerBet { get; set; }
