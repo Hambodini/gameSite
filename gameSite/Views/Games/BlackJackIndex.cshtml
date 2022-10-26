@@ -23,7 +23,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        @using (Html.BeginForm("BlackJackIndex", "Games"))
+        @using (Html.BeginForm("BlackJackDraw", "Games"))
         {
             //passing blackjack model
             for (int i = 0; i < Model.Cards.Count; i++)
@@ -41,7 +41,8 @@
             @Html.HiddenFor(model => model.Round);
             @Html.HiddenFor(model => model.HouseCardDrawn);
             @Html.HiddenFor(model => model.PlayerCardDrawn);
-            @Html.ActionLink("Draw", "BlackJackDraw")
+            <input type="submit" value="Draw" />
+            //@Html.ActionLink("Draw", "BlackJackDraw")
         }
     </div>
 </div>
