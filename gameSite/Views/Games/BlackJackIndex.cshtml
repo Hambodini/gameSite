@@ -47,10 +47,26 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="BlackJackIndex" method="post">
-            <input type="hidden" name="action" value="stand" />
-            <input type="submit" value="Stand" />
-        </form>
+        @using (Html.BeginForm("BlackJackIndex", "Games"))
+        {
+            //passing blackjack model
+            for (int i = 0; i < Model.Cards.Count; i++)
+            {
+                @Html.HiddenFor(model => model.Cards[i]);
+            }
+            @Html.HiddenFor(model => model.DidPlayerBet);
+            @Html.HiddenFor(model => model.DidPlayerDoubleDown);
+            @Html.HiddenFor(model => model.DidPlayerStand);
+            @Html.HiddenFor(model => model.DidPlayerWin);
+            @Html.HiddenFor(model => model.GameEnd);
+            @Html.HiddenFor(model => model.HouseCount);
+            @Html.HiddenFor(model => model.PlayerBet);
+            @Html.HiddenFor(model => model.PlayerCount);
+            @Html.HiddenFor(model => model.Round);
+            @Html.HiddenFor(model => model.HouseCardDrawn);
+            @Html.HiddenFor(model => model.PlayerCardDrawn);
+            @Html.ActionLink("Stand", "BlackJackStand")
+        }
     </div>
 </div>
 @*betting options*@
@@ -58,18 +74,49 @@
     <div class="col-md-4">
         @if (Model.DidPlayerBet == false)
         {
-            <form asp-action="BlackJackIndex" method="post">
-                <input type="hidden" name="action" value="bet" />
-                <input type="text" name="amount" />
-                <input type="submit" value="Bet" />
-            </form>
+            using (Html.BeginForm("BlackJackIndex", "Games"))
+            {
+                //passing blackjack model
+                for (int i = 0; i < Model.Cards.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.Cards[i]);
+                }
+                @Html.HiddenFor(model => model.DidPlayerBet);
+                @Html.HiddenFor(model => model.DidPlayerDoubleDown);
+                @Html.HiddenFor(model => model.DidPlayerStand);
+                @Html.HiddenFor(model => model.DidPlayerWin);
+                @Html.HiddenFor(model => model.GameEnd);
+                @Html.HiddenFor(model => model.HouseCount);
+                @Html.HiddenFor(model => model.PlayerBet);
+                @Html.HiddenFor(model => model.PlayerCount);
+                @Html.HiddenFor(model => model.Round);
+                @Html.HiddenFor(model => model.HouseCardDrawn);
+                @Html.HiddenFor(model => model.PlayerCardDrawn);
+                @Html.ActionLink("Bet", "BlackJackBet")
+            }
         }
         @if (Model.DidPlayerDoubleDown == false)
         {
-            <form asp-action="BlackJackIndex" method="post">
-                <input type="hidden" name="action" value="dd" />
-                <input type="submit" value="Double Down" />
-            </form>
+            using (Html.BeginForm("BlackJackIndex", "Games"))
+            {
+                //passing blackjack model
+                for (int i = 0; i < Model.Cards.Count; i++)
+                {
+                    @Html.HiddenFor(model => model.Cards[i]);
+                }
+                @Html.HiddenFor(model => model.DidPlayerBet);
+                @Html.HiddenFor(model => model.DidPlayerDoubleDown);
+                @Html.HiddenFor(model => model.DidPlayerStand);
+                @Html.HiddenFor(model => model.DidPlayerWin);
+                @Html.HiddenFor(model => model.GameEnd);
+                @Html.HiddenFor(model => model.HouseCount);
+                @Html.HiddenFor(model => model.PlayerBet);
+                @Html.HiddenFor(model => model.PlayerCount);
+                @Html.HiddenFor(model => model.Round);
+                @Html.HiddenFor(model => model.HouseCardDrawn);
+                @Html.HiddenFor(model => model.PlayerCardDrawn);
+                @Html.ActionLink("Double Down", "BlackJackDoubleDown")
+            }
         }
     </div>
 </div>
