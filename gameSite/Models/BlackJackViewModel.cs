@@ -7,14 +7,6 @@ namespace gameSite.Models
 {
     public class BlackJackViewModel
     {
-        public BlackJackViewModel()
-        {
-            this.DidPlayerWin = false;
-            this.DidPlayerStand = false;
-            this.DidPlayerBet = false;
-            this.DidPlayerDoubleDown = false;
-            this.GameEnd = false;
-        }
         public int Round { get; set; }
         public int PlayerBet { get; set; }
         public int PlayerCount { get; set; }
@@ -24,9 +16,9 @@ namespace gameSite.Models
         public string PlayerCardDrawn { get; set; }
         public bool DidPlayerWin { get; set; }
         public bool DidPlayerStand { get; set; }
-        public bool DidPlayerBet { get; set; }
         public bool DidPlayerDoubleDown { get; set; }
         public bool GameEnd { get; set; }
+        public bool WasDraw { get; set; }
 
         public int FindValue(String card)
         {

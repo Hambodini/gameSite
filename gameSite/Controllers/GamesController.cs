@@ -16,10 +16,12 @@ namespace gameSite.Controllers
             BlackJackViewModel Model = new BlackJackViewModel
             {
                 Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
+                DidPlayerWin = false,
+                DidPlayerStand = false,
+                DidPlayerDoubleDown = false,
+                GameEnd = false,
                 HouseCount = 0,
-                HouseCardDrawn = "nothing",
                 PlayerCount = 0,
-                PlayerCardDrawn = "nothing",
                 Round = 1
             };
 
@@ -32,116 +34,135 @@ namespace gameSite.Controllers
 
             return View(Model);
         }
-        public ActionResult BlackJackDraw(BlackJackViewModel Model)
+        public ActionResult BlackJackDraw(BlackJackViewModel Model, int playerCount, int houseCount, int Round, int betAmount)
         {
 
             Random rnd = new Random();
+            int amountOfCards;
+            int randomNumber;
+            int updatedHouseCount = houseCount;
+            if (houseCount <= 17)
+            {
+                //draw a card for the house
+                amountOfCards = Model.Cards.Count - 1;
+                randomNumber = rnd.Next(0, amountOfCards);
+                var houseCard = Model.Cards[randomNumber].ToString();
+                Model.Cards.RemoveAt(randomNumber);
 
-            //draw a card for the house
-            int amountOfCards = Model.Cards.Count - 1;
-            int randomNumber = rnd.Next(0, amountOfCards);
-            String card = Model.Cards[randomNumber].ToString();
-            Model.Cards.RemoveAt(randomNumber);
-
-            //add value to house set card drawn
-            Model.HouseCardDrawn = card;
-            Model.HouseCount = Model.HouseCount + Model.FindValue(card);
+                //add value to house set card drawn
+                var houseCardValue = Model.FindValue(houseCard);
+                var oldHouseCount = houseCount;
+                updatedHouseCount = oldHouseCount + houseCardValue;
+                Model.HouseCardDrawn = houseCard;
+                //Model.HouseCount = updatedHouseCount;
+            }
+            else
+            {
+                Model.HouseCardDrawn = "nothing";
+            }
 
             //draw a card for the player
             amountOfCards = Model.Cards.Count - 1;
             randomNumber = rnd.Next(0, amountOfCards);
-            card = Model.Cards[randomNumber].ToString();
+            var playerCard = Model.Cards[randomNumber].ToString();
             Model.Cards.RemoveAt(randomNumber);
 
             //add value to player and set card drawn
-            Model.PlayerCardDrawn = card;
-            Model.PlayerCount = Model.PlayerCount + Model.FindValue(card);
+            var playerCardValue = Model.FindValue(playerCard);
+            var oldPlayerCount = playerCount;
+            var updatedPlayerCount = oldPlayerCount + playerCardValue;
+            Model.PlayerCardDrawn = playerCard;
 
-            //increment round
-            Model.Round++;
+            var bjvm = new BlackJackViewModel();
 
             //win check
-            if (Model.HouseCount > 21 && Model.PlayerCount < 21)
+            if (updatedHouseCount > 21 && updatedPlayerCount < 21)
             {
-                Model.DidPlayerWin = true;
-                Model.GameEnd = true;
+                bjvm.DidPlayerWin = true;
+                bjvm.GameEnd = true;
 
             }
-            else if (Model.HouseCount < 21 && Model.PlayerCount > 21)
+            else if (updatedHouseCount < 21 && updatedPlayerCount > 21)
             {
-                Model.DidPlayerWin = false;
-                Model.GameEnd = true;
+                bjvm.DidPlayerWin = false;
+                bjvm.GameEnd = true;
+            }
+            else if (updatedHouseCount > 21 && updatedPlayerCount > 21)
+            {
+                bjvm.WasDraw = true;
+                bjvm.GameEnd = true;
             }
 
-            return View("BlackJackIndex", Model);
+
+            bjvm.Cards = Model.Cards;
+            bjvm.HouseCount = updatedHouseCount;
+            bjvm.HouseCardDrawn = Model.HouseCardDrawn;
+            bjvm.DidPlayerDoubleDown = Model.DidPlayerDoubleDown;
+            bjvm.PlayerCount = updatedPlayerCount;
+            bjvm.PlayerBet = betAmount;
+            bjvm.PlayerCardDrawn = Model.PlayerCardDrawn;
+            Round++;
+            bjvm.Round = Round;
+
+
+            return View("BlackJackIndex", bjvm);
 
         }
 
-        public ActionResult BlackJackStand(BlackJackViewModel Model)
+        public ActionResult BlackJackBet(BlackJackViewModel Model, int playerCount, int houseCount, int Round, string Amount, string HouseCardDrawn, string CardDrawn)
         {
-            Model.Round++;
-            Model.DidPlayerStand = true;
-
-            Random rnd = new Random();
-
-            //draw a card for the house
-            int amountOfCards = Model.Cards.Count - 1;
-            int randomNumber = rnd.Next(0, amountOfCards);
-            String card = Model.Cards[randomNumber].ToString();
-            Model.Cards.RemoveAt(randomNumber);
-
-            //add value to house set card drawn
-            Model.HouseCardDrawn = card;
-            Model.HouseCount += Model.FindValue(card);
-
-            //win check
-            if (Model.HouseCount > Model.PlayerCount)
-            {
-                Model.DidPlayerWin = false;
-            }
-            else
-            {
-                Model.DidPlayerWin = true;
-                Model.GameEnd = true;
-            }
-
-            return View("BlackJackIndex", Model);
-
-        }
-
-        public ActionResult BlackJackBet(BlackJackViewModel Model)
-        {
-            String betString = Request.QueryString["amount"];
-            int bet = 0;
-
+            var bjvm = new BlackJackViewModel();
+            int BetAmount = 0;
             try
             {
-                bet = int.Parse(betString);
+                BetAmount = int.Parse(Amount);
             }
             catch (Exception)
             {
-            }
-            if (bet != 0)
-            {
-                Model.DidPlayerBet = true;
-                Model.PlayerBet = bet;
+                ViewBag.error = "Your bet has to be a whole number";
             }
 
-            return View("BlackJackIndex", Model);
+            if (BetAmount != 0)
+            {
+                bjvm.PlayerBet = BetAmount;
+            }
+
+            bjvm.Cards = Model.Cards;
+            bjvm.HouseCount = houseCount;
+            bjvm.HouseCardDrawn = Model.HouseCardDrawn;
+            bjvm.PlayerCount = playerCount;
+            bjvm.PlayerCardDrawn = Model.PlayerCardDrawn;
+            bjvm.Round = Round;
+
+
+            return View("BlackJackIndex", bjvm);
 
         }
 
-        public ActionResult BlackJackDoubleDown(BlackJackViewModel Model)
+        public ActionResult BlackJackDoubleDown(BlackJackViewModel Model, int playerCount, int houseCount, int Round, int betAmount)
         {
+            var bjvm = new BlackJackViewModel();
 
-            if (Model.DidPlayerBet == true)
+            if (betAmount == 0)
             {
-                Model.PlayerBet *= 2;
-                Model.DidPlayerDoubleDown = true;
+                ViewBag.error = "You need to bet something if you want to double down";
+            }
+            else
+            {
+                betAmount *= 2;
+                bjvm.PlayerBet = betAmount;
+                bjvm.DidPlayerDoubleDown = true;
             }
 
-            return View("BlackJackIndex", Model);
+            bjvm.Cards = Model.Cards;
+            bjvm.HouseCount = houseCount;
+            bjvm.HouseCardDrawn = Model.HouseCardDrawn;
+            bjvm.PlayerCount = playerCount;
+            bjvm.PlayerCardDrawn = Model.PlayerCardDrawn;
+            bjvm.Round = Round;
 
+
+            return View("BlackJackIndex", bjvm);
         }
     }
 }
