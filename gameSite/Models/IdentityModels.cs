@@ -30,6 +30,12 @@ namespace gameSite.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<ShopItem> ShopItems { get; set; }
+        public DbSet<PlayerItem> PlayerItems { get; set; }
+        public DbSet<PlayerGame> PlayerGames { get; set; }
+        public DbSet<Game> Games { get; set; }
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
