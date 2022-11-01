@@ -8,8 +8,9 @@ namespace gameSite.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GameID { get; set; }
+        [Required]
         public string Name { get; set; }
         public int UnlockCost { get; set; }
-        
+
     }
 }

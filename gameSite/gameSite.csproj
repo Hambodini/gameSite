@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202210191833391_seededMultipleUsers.Designer.cs">
       <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202211010314306_addingDatabases.cs" />
+    <Compile Include="Migrations\202211010314306_addingDatabases.Designer.cs">
+      <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BlackJackViewModel.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202210191833391_seededMultipleUsers.resx">
       <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211010314306_addingDatabases.resx">
+      <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
