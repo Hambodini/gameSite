@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -112,12 +118,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -169,8 +169,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
+    <Compile Include="Controllers\GamesDBController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlayerGamesDBController.cs" />
+    <Compile Include="Controllers\PlayerItemsDBController.cs" />
+    <Compile Include="Controllers\ShopItemsDBController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -201,6 +205,26 @@
     <Compile Include="Migrations\202211010314306_addingDatabases.cs" />
     <Compile Include="Migrations\202211010314306_addingDatabases.Designer.cs">
       <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040303039_PopulateGames.cs" />
+    <Compile Include="Migrations\202211040303039_PopulateGames.Designer.cs">
+      <DependentUpon>202211040303039_PopulateGames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040314020_ChangesToPlayerModels.cs" />
+    <Compile Include="Migrations\202211040314020_ChangesToPlayerModels.Designer.cs">
+      <DependentUpon>202211040314020_ChangesToPlayerModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040321157_HardCodedShopItems.cs" />
+    <Compile Include="Migrations\202211040321157_HardCodedShopItems.Designer.cs">
+      <DependentUpon>202211040321157_HardCodedShopItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040322516_HardCodedPlayerItems.cs" />
+    <Compile Include="Migrations\202211040322516_HardCodedPlayerItems.Designer.cs">
+      <DependentUpon>202211040322516_HardCodedPlayerItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202211040324012_HardCodedPlayerGames.cs" />
+    <Compile Include="Migrations\202211040324012_HardCodedPlayerGames.Designer.cs">
+      <DependentUpon>202211040324012_HardCodedPlayerGames.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -271,6 +295,26 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Games\BlackJackIndex.cshtml" />
+    <Content Include="Views\GamesDB\Create.cshtml" />
+    <Content Include="Views\GamesDB\Delete.cshtml" />
+    <Content Include="Views\GamesDB\Details.cshtml" />
+    <Content Include="Views\GamesDB\Edit.cshtml" />
+    <Content Include="Views\GamesDB\Index.cshtml" />
+    <Content Include="Views\PlayerGamesDB\Create.cshtml" />
+    <Content Include="Views\PlayerGamesDB\Delete.cshtml" />
+    <Content Include="Views\PlayerGamesDB\Details.cshtml" />
+    <Content Include="Views\PlayerGamesDB\Edit.cshtml" />
+    <Content Include="Views\PlayerGamesDB\Index.cshtml" />
+    <Content Include="Views\PlayerItemsDB\Create.cshtml" />
+    <Content Include="Views\PlayerItemsDB\Delete.cshtml" />
+    <Content Include="Views\PlayerItemsDB\Details.cshtml" />
+    <Content Include="Views\PlayerItemsDB\Edit.cshtml" />
+    <Content Include="Views\PlayerItemsDB\Index.cshtml" />
+    <Content Include="Views\ShopItemsDB\Create.cshtml" />
+    <Content Include="Views\ShopItemsDB\Delete.cshtml" />
+    <Content Include="Views\ShopItemsDB\Details.cshtml" />
+    <Content Include="Views\ShopItemsDB\Edit.cshtml" />
+    <Content Include="Views\ShopItemsDB\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,6 +353,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202211010314306_addingDatabases.resx">
       <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040303039_PopulateGames.resx">
+      <DependentUpon>202211040303039_PopulateGames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040314020_ChangesToPlayerModels.resx">
+      <DependentUpon>202211040314020_ChangesToPlayerModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040321157_HardCodedShopItems.resx">
+      <DependentUpon>202211040321157_HardCodedShopItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040322516_HardCodedPlayerItems.resx">
+      <DependentUpon>202211040322516_HardCodedPlayerItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202211040324012_HardCodedPlayerGames.resx">
+      <DependentUpon>202211040324012_HardCodedPlayerGames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

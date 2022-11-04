@@ -11,7 +11,7 @@ namespace gameSite.Models
         [Required]
         public int Gameid { get; set; }
         [Required]
-        public int Userid { get; set; }
+        public string Userid { get; set; }
         [Required]
         public string Useremail { get; set; }
     }

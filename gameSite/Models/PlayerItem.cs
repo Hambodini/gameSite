@@ -9,7 +9,7 @@ namespace gameSite.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Inventoryid { get; set; }
         [Required]
-        public int Userid { get; set; }
+        public string Userid { get; set; }
         [Required]
         public int Itemid { get; set; }
         [Required]

@@ -45,5 +45,7 @@ namespace gameSite.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<gameSite.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
