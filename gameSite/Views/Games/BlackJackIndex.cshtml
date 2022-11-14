@@ -1,4 +1,5 @@
 ﻿@model gameSite.Models.BlackJackViewModel
+
 @{
     ViewBag.Title = "BlackJackIndex";
 }
@@ -30,29 +31,6 @@
         <div class="col-md-4">
             @using (Html.BeginForm("BlackJackDraw", "Games"))
             {
-                //passing blackjack model
-                for (int i = 0; i < Model.Cards.Count; i++)
-                {
-                    @Html.HiddenFor(model => model.Cards[i]);
-                }
-                Html.HiddenFor(model => model.DidPlayerDoubleDown);
-                Html.HiddenFor(model => model.DidPlayerStand);
-                Html.HiddenFor(model => model.DidPlayerWin);
-                Html.HiddenFor(model => model.GameEnd);
-                Html.HiddenFor(model => model.HouseCount);
-                Html.HiddenFor(model => model.PlayerBet);
-                Html.HiddenFor(model => model.PlayerCount);
-                Html.HiddenFor(model => model.Round);
-                Html.HiddenFor(model => model.HouseCardDrawn);
-                Html.HiddenFor(model => model.PlayerCardDrawn);
-                Html.HiddenFor(model => model.WasDraw);
-
-                <input type="hidden" name="playerCount" value="@Model.PlayerCount" />
-                <input type="hidden" name="houseCount" value="@Model.HouseCount" />
-                <input type="hidden" name="betAmount" value="@Model.PlayerBet" />
-                <input type="hidden" name="Round" value="@Model.Round" />
-
-
                 <input type="submit" value="Draw" />
             }
         </div>
@@ -66,29 +44,7 @@
                 {
                     using (Html.BeginForm("BlackJackBet", "Games"))
                     {
-                        //passing blackjack model
-                        for (int i = 0; i < Model.Cards.Count; i++)
-                        {
-                            @Html.HiddenFor(model => model.Cards[i]);
-                        }
-                        Html.HiddenFor(model => model.DidPlayerDoubleDown);
-                        Html.HiddenFor(model => model.DidPlayerStand);
-                        Html.HiddenFor(model => model.DidPlayerWin);
-                        Html.HiddenFor(model => model.GameEnd);
-                        Html.HiddenFor(model => model.HouseCount);
-                        Html.HiddenFor(model => model.PlayerBet);
-                        Html.HiddenFor(model => model.PlayerCount);
-                        Html.HiddenFor(model => model.Round);
-                        Html.HiddenFor(model => model.HouseCardDrawn);
-                        Html.HiddenFor(model => model.PlayerCardDrawn);
-                        Html.HiddenFor(model => model.WasDraw);
-
-                        <input type="hidden" name="playerCount" value="@Model.PlayerCount" />
-                        <input type="hidden" name="houseCount" value="@Model.HouseCount" />
-                        <input type="hidden" name="Round" value="@Model.Round" />
-
                         <input type="text" name="Amount" />
-
                         <input type="submit" value="Bet" />
                     }
                 }
@@ -96,33 +52,8 @@
                 {
                     using (Html.BeginForm("BlackJackDoubleDown", "Games"))
                     {
-                        //passing blackjack model
-                        for (int i = 0; i < Model.Cards.Count; i++)
-                        {
-                            @Html.HiddenFor(model => model.Cards[i]);
-                        }
-                        Html.HiddenFor(model => model.DidPlayerDoubleDown);
-                        Html.HiddenFor(model => model.DidPlayerStand);
-                        Html.HiddenFor(model => model.DidPlayerWin);
-                        Html.HiddenFor(model => model.GameEnd);
-                        Html.HiddenFor(model => model.HouseCount);
-                        Html.HiddenFor(model => model.PlayerBet);
-                        Html.HiddenFor(model => model.PlayerCount);
-                        Html.HiddenFor(model => model.Round);
-                        Html.HiddenFor(model => model.HouseCardDrawn);
-                        Html.HiddenFor(model => model.PlayerCardDrawn);
-                        Html.HiddenFor(model => model.WasDraw);
-
-                        <input type="hidden" name="playerCount" value="@Model.PlayerCount" />
-                        <input type="hidden" name="houseCount" value="@Model.HouseCount" />
-                        <input type="hidden" name="Round" value="@Model.Round" />
-                        <input type="hidden" name="betAmount" value="@Model.PlayerBet" />
-
                         <input type="submit" value="Double Down" />
-                    }
-                    if (ViewBag.error != null)
-                    {
-                        <p>@ViewBag.error</p>
+                            <p>@ViewBag.error</p>
                     }
                 }
             </div>
