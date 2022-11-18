@@ -15,12 +15,13 @@
         <p class="btn btn-default">@Html.ActionLink("Edit Items Owned By Players", "Index", "PlayerItemsDB")</p>
         <p class="btn btn-default">@Html.ActionLink("Edit Items In Store", "Index", "ShopItemsDB")</p>
     }
-    @if (User.IsInRole("User"))
+    else
     {
         <h1>Actions:</h1>
         <p class="btn btn-default">@Html.ActionLink("View Games You Own", "Index", "PlayerGamesDB")</p>
         <p class="btn btn-default">@Html.ActionLink("View Items You Own", "Index", "PlayerItemsDB")</p>
-        <p class="btn btn-default">@Html.ActionLink("View Store", "Index", "ShopItemsDB")</p>
+        <p class="btn btn-default">@Html.ActionLink("View Game Store", "Index", "GamesDB")</p>
+        <p class="btn btn-default">@Html.ActionLink("View Item Store", "Index", "ShopItemsDB")</p>
     }
 </div>
 

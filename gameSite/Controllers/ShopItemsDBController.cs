@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using gameSite.Models;
+using Microsoft.AspNet.Identity;
 
 namespace gameSite.Controllers
 {
@@ -18,6 +19,34 @@ namespace gameSite.Controllers
         public ActionResult Index()
         {
             return View(db.ShopItems.ToList());
+        }
+        public ActionResult Buy(int? id)
+        {
+            //get the game
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Game game = db.Games.Find(id);
+            if (game == null)
+            {
+                return HttpNotFound();
+            }
+            // get the user
+            var Userid = User.Identity.GetUserId();
+            var user = db.Users.Find(Userid);
+            //conditions for validating payment
+            if (user.Caps > game.UnlockCost)
+            {
+                user.Caps -= game.UnlockCost;
+                db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.error = "not enough caps";
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: ShopItemsDB/Details/5

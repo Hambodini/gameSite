@@ -89,7 +89,6 @@ namespace gameSite.Controllers
             return View("BlackJackIndex", BJControllerModel);
 
         }
-
         public ActionResult BlackJackBet(string Amount)
         {
             int BetAmount = 0;
@@ -110,7 +109,6 @@ namespace gameSite.Controllers
             return View("BlackJackIndex", BJControllerModel);
 
         }
-
         public ActionResult BlackJackDoubleDown()
         {
 

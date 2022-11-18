@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using gameSite.Models;
+using Microsoft.AspNet.Identity;
 
 namespace gameSite.Controllers
 {
@@ -18,6 +19,10 @@ namespace gameSite.Controllers
         public ActionResult Index()
         {
             return View(db.Games.ToList());
+        }
+        public ActionResult Buy(int? id)
+        {
+            return RedirectToAction("Index");
         }
 
         // GET: GamesDB/Details/5
