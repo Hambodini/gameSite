@@ -7,6 +7,7 @@
     {
         <h1>Log in to play more games then shown below. you could win big too!</h1>
     }
+
     @if (User.IsInRole("Admin"))
     {
         <h1>Actions:</h1>
@@ -15,7 +16,8 @@
         <p class="btn btn-default">@Html.ActionLink("Edit Items Owned By Players", "Index", "PlayerItemsDB")</p>
         <p class="btn btn-default">@Html.ActionLink("Edit Items In Store", "Index", "ShopItemsDB")</p>
     }
-    else
+
+    @if (User.Identity.IsAuthenticated)
     {
         <h1>Actions:</h1>
         <p class="btn btn-default">@Html.ActionLink("View Games You Own", "Index", "PlayerGamesDB")</p>
@@ -28,17 +30,49 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Black Jack</h2>
-        <p>blackjack, or twenty-one, Card game whose object is to be dealt cards having a higher count than those of the dealer, up to but not exceeding 21. The dealer may use a single deck of 52 cards and stops drawing after 17. Aces count as 1, and face cards as 10.</p>
+        <p>You and the computer draw cards till one of you is 21 or closer to it. The computer stops drawing after 17. Aces count as 1, and face cards as 10.</p>
         <p class="btn btn-default">@Html.ActionLink("Play Game", "BlackJackIndex", "Games")</p>
     </div>
-</div>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="row">
+    @if (User.Identity.IsAuthenticated)
+    {
+
         <div class="col-md-4">
-            <h2>More games to come!</h2>
-            <p></p>
+            <h2>Coin Flip</h2>
+            <p>A coin is fliped, if you call it right you win. if wrong you lose.</p>
+            <p class="btn btn-default">@Html.ActionLink("Play Game", "CoinFlipIndex", "Games")</p>
         </div>
-    </div>
-}
+
+
+
+        <div class="col-md-4">
+            <h2>Rock Paper Scissors</h2>
+            <p>You pick Rock, Paper, or scissors then the computer pickes a random one. if you beat it you win. if you dont you lose.</p>
+            <p class="btn btn-default">@Html.ActionLink("Play Game", "RockPaperScissorsIndex", "Games")</p>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <h2>High Low</h2>
+            <p>a card is  picked by the dealer you have to guess whether the next card will be lower or higher. guess right and you win. not and you lose.</p>
+            <p class="btn btn-default">@Html.ActionLink("Play Game", "HighLowIndex", "Games")</p>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <h2>Wheel Of Fortune</h2>
+            <p>You see a list of possible penalties or rewards and spin the wheel. the computer picks a random result adn the game end depending on what the outcome says.</p>
+            <p class="btn btn-default">@Html.ActionLink("Play Game", "WheelOfFortuneIndex", "Games")</p>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <h2>Slots</h2>
+            <p>The player has to bet a minimum of 1 cap and the machine rolls three outcomes (x2, x3, x4) if the player gets all of a type then they get that times what they betted.</p>
+            <p class="btn btn-default">@Html.ActionLink("Play Game", "SlotsIndex", "Games")</p>
+        </div>
+    }
+</div>

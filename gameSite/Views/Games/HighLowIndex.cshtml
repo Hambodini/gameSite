@@ -1,7 +1,7 @@
-﻿@model gameSite.Models.BlackJackViewModel
+﻿@model gameSite.Models.HighLowViewModel
 
 @{
-    ViewBag.Title = "BlackJack";
+    ViewBag.Title = "HighLow";
 }
 <div class="jumbotron">
     <h1>Round: @Model.Round</h1>
@@ -13,26 +13,14 @@
         if (Model.DidPlayerWin == true)
         {
             <h1>You Win</h1>
-            using (Html.BeginForm("BlackJackIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
         }
         else if (Model.DidPlayerWin == false)
         {
             <h1>You Lose</h1>
-            using (Html.BeginForm("BlackJackIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
         }
         else
         {
             <h1>It was a draw</h1>
-            using (Html.BeginForm("BlackJackIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
         }
     }
 </div>

@@ -1,0 +1,75 @@
+﻿@model gameSite.Models.RockPaperScissorsViewModel
+
+@{
+    ViewBag.Title = "Rock Paper Scissors";
+}
+<div class="jumbotron">
+    <p class="lead">Current Player Count: @Model.PlayerChoice</p>
+    <p class="lead">Current Bet: @Model.PlayerBet</p>
+    <p class="lead">Current House Count: @Model.Outcome</p>
+    @if (Model.GameEnd == true)
+    {
+        if (Model.DidPlayerWin == true)
+        {
+            <h1>You Win</h1>
+            using (Html.BeginForm("RockPaperScissorsIndex", "Games"))
+            {
+                <input type="submit" value="Play Again" />
+            }
+        }
+        else if (Model.DidPlayerWin == false)
+        {
+            <h1>You Lose</h1>
+            using (Html.BeginForm("RockPaperScissorsIndex", "Games"))
+            {
+                <input type="submit" value="Play Again" />
+            }
+        }
+    }
+</div>
+@*player actions*@
+@if (Model.GameEnd == false)
+{
+    <div class="row">
+        <div class="col-md-4">
+            @if (Model.PlayerChoice == "")
+            {
+                using (Html.BeginForm("RockPaperScissorsRock", "Games"))
+                {
+                    <input type="submit" value="Rock" />
+                }
+                using (Html.BeginForm("RockPaperScissorsPaper", "Games"))
+                {
+                    <input type="submit" value="Paper" />
+                }
+                using (Html.BeginForm("RockPaperScissorsScissors", "Games"))
+                {
+                    <input type="submit" value="Scissors" />
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("RockPaperScissorsDraw", "Games"))
+                {
+                    <input type="submit" value="Play" />
+                }
+            }
+        </div>
+    </div>
+    @*betting options*@
+    if (User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                @if (Model.PlayerBet == 0)
+                {
+                    using (Html.BeginForm("RockPaperScissorsBet", "Games"))
+                    {
+                        <input type="text" name="Amount" />
+                        <input type="submit" value="Bet" />
+                    }
+                }
+            </div>
+        </div>
+    }
+}

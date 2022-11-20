@@ -39,6 +39,7 @@ namespace gameSite.Controllers
             if (user.Caps > game.UnlockCost)
             {
                 user.Caps -= game.UnlockCost;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
             }
             else

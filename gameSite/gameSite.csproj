@@ -228,7 +228,12 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BlackJackViewModel.cs" />
+    <Compile Include="Models\GameViewModels\BlackJackViewModel.cs" />
+    <Compile Include="Models\GameViewModels\CoinFlipViewModel.cs" />
+    <Compile Include="Models\GameViewModels\HighLowViewModel.cs" />
+    <Compile Include="Models\GameViewModels\RockPaperScissorsViewModel.cs" />
+    <Compile Include="Models\GameViewModels\SlotsViewModel.cs" />
+    <Compile Include="Models\GameViewModels\WheelOfFortuneViewModel.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -315,6 +320,11 @@
     <Content Include="Views\ShopItemsDB\Details.cshtml" />
     <Content Include="Views\ShopItemsDB\Edit.cshtml" />
     <Content Include="Views\ShopItemsDB\Index.cshtml" />
+    <Content Include="Views\Games\CoinFlipIndex.cshtml" />
+    <Content Include="Views\Games\SlotsIndex.cshtml" />
+    <Content Include="Views\Games\WheelOfFortuneIndex.cshtml" />
+    <Content Include="Views\Games\HighLowIndex.cshtml" />
+    <Content Include="Views\Games\RockPaperScissorsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
