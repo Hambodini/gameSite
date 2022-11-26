@@ -20,26 +20,40 @@ namespace gameSite.Controllers
         {
             return View(db.ShopItems.ToList());
         }
+        public ActionResult IndexBuy()
+        {
+            return View("IndexBuy", db.ShopItems.ToList());
+        }
         public ActionResult Buy(int? id)
         {
-            //get the game
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = db.Games.Find(id);
-            if (game == null)
+            ShopItem shopItem = db.ShopItems.Find(id);
+            if (shopItem == null)
             {
                 return HttpNotFound();
             }
             // get the user
             var Userid = User.Identity.GetUserId();
-            var user = db.Users.Find(Userid);
+            var Useremail = User.Identity.Name;
+            var currentCap = db.Caps.Find(Userid);
             //conditions for validating payment
-            if (user.Caps > game.UnlockCost)
+            if (currentCap.Amount > shopItem.Price)
             {
-                user.Caps -= game.UnlockCost;
-                db.Entry(user).State = EntityState.Modified;
+                currentCap.Amount -= shopItem.Price;
+                db.Entry(currentCap).State = EntityState.Modified;
+                PlayerItem existingRecord = (PlayerItem)(from p in db.PlayerItems where (p.Userid == Userid) select p);
+                if (existingRecord == null)
+                {
+                    PlayerItem playerItem = new PlayerItem(Userid, shopItem.Itemid, shopItem.Name, 1, Useremail);
+                    db.PlayerItems.Add(playerItem);
+                } else
+                {
+                    existingRecord.Quantity += 1;
+
+                }
                 db.SaveChanges();
             }
             else

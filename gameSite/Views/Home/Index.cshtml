@@ -10,20 +10,16 @@
 
     @if (User.IsInRole("Admin"))
     {
-        <h1>Actions:</h1>
-        <p class="btn btn-default">@Html.ActionLink("Edit Games", "Index", "GamesDB")</p>
-        <p class="btn btn-default">@Html.ActionLink("Edit Games Owned By Players", "Index", "PlayerGamesDB")</p>
+        <h1>Admin Actions:</h1>
         <p class="btn btn-default">@Html.ActionLink("Edit Items Owned By Players", "Index", "PlayerItemsDB")</p>
         <p class="btn btn-default">@Html.ActionLink("Edit Items In Store", "Index", "ShopItemsDB")</p>
     }
 
     @if (User.Identity.IsAuthenticated)
     {
-        <h1>Actions:</h1>
-        <p class="btn btn-default">@Html.ActionLink("View Games You Own", "Index", "PlayerGamesDB")</p>
-        <p class="btn btn-default">@Html.ActionLink("View Items You Own", "Index", "PlayerItemsDB")</p>
-        <p class="btn btn-default">@Html.ActionLink("View Game Store", "Index", "GamesDB")</p>
-        <p class="btn btn-default">@Html.ActionLink("View Item Store", "Index", "ShopItemsDB")</p>
+        <h1>User Actions:</h1>
+        <p class="btn btn-default">@Html.ActionLink("View Items You Own", "IndexByUser", "PlayerItemsDB")</p>
+        <p class="btn btn-default">@Html.ActionLink("View Item Store", "IndexBuy", "ShopItemsDB")</p>
     }
 </div>
 

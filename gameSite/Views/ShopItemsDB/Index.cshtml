@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Shop</h2>
+<h2>All Items For Sale</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -29,20 +29,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            @if (User.IsInRole("Admin"))
-            {
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Itemid }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Itemid }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Itemid })
-                </td>
-            }
-            else if(User.Identity.IsAuthenticated)
-            {
-                <td>
-                    @Html.ActionLink("Buy", "Buy", new { id = item.Itemid })
-                </td>
-            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Itemid }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Itemid }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Itemid })
+            </td>
         </tr>
     }
 

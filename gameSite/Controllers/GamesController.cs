@@ -16,7 +16,6 @@ namespace gameSite.Controllers
         public static SlotsViewModel SControllerModel { get; set; }
         public static WheelOfFortuneViewModel WOFControllerModel { get; set; }
         // GET: Games
-        [HttpGet]
         public ActionResult BlackJackIndex()
         {
             BlackJackViewModel Model = new BlackJackViewModel
@@ -177,7 +176,6 @@ namespace gameSite.Controllers
             {
                 CFControllerModel.DidPlayerWin = true;
                 CFControllerModel.GameEnd = true;
-
             }
             else
             {

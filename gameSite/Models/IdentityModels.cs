@@ -18,22 +18,13 @@ namespace gameSite.Models
             // Add custom user claims here
             return userIdentity;
         }
-
-        // Custom Fields
-        [Required]
-        [DefaultValue(100)]
-        public int Caps { get; set; }
-        [Required]
-        [DefaultValue("false")]
-        public bool IsBanned { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<ShopItem> ShopItems { get; set; }
         public DbSet<PlayerItem> PlayerItems { get; set; }
-        public DbSet<PlayerGame> PlayerGames { get; set; }
-        public DbSet<Game> Games { get; set; }
+        public DbSet<Cap> Caps { get; set; }
 
 
         public ApplicationDbContext()

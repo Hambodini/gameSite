@@ -52,6 +52,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -169,10 +170,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GamesController.cs" />
-    <Compile Include="Controllers\GamesDBController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PlayerGamesDBController.cs" />
     <Compile Include="Controllers\PlayerItemsDBController.cs" />
     <Compile Include="Controllers\ShopItemsDBController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,62 +181,17 @@
     <Compile Include="Migrations\202210101834495_initial.Designer.cs">
       <DependentUpon>202210101834495_initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202210110218365_AddedPropIsBannedAndCapsToUsers.cs" />
-    <Compile Include="Migrations\202210110218365_AddedPropIsBannedAndCapsToUsers.Designer.cs">
-      <DependentUpon>202210110218365_AddedPropIsBannedAndCapsToUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202210191813061_addedRolesToUsers.cs" />
-    <Compile Include="Migrations\202210191813061_addedRolesToUsers.Designer.cs">
-      <DependentUpon>202210191813061_addedRolesToUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202210191822027_addedAdminAccount.cs" />
-    <Compile Include="Migrations\202210191822027_addedAdminAccount.Designer.cs">
-      <DependentUpon>202210191822027_addedAdminAccount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202210191830391_addedAdminAccountToAdminRole.cs" />
-    <Compile Include="Migrations\202210191830391_addedAdminAccountToAdminRole.Designer.cs">
-      <DependentUpon>202210191830391_addedAdminAccountToAdminRole.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202210191833391_seededMultipleUsers.cs" />
-    <Compile Include="Migrations\202210191833391_seededMultipleUsers.Designer.cs">
-      <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211010314306_addingDatabases.cs" />
-    <Compile Include="Migrations\202211010314306_addingDatabases.Designer.cs">
-      <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211040303039_PopulateGames.cs" />
-    <Compile Include="Migrations\202211040303039_PopulateGames.Designer.cs">
-      <DependentUpon>202211040303039_PopulateGames.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211040314020_ChangesToPlayerModels.cs" />
-    <Compile Include="Migrations\202211040314020_ChangesToPlayerModels.Designer.cs">
-      <DependentUpon>202211040314020_ChangesToPlayerModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211040321157_HardCodedShopItems.cs" />
-    <Compile Include="Migrations\202211040321157_HardCodedShopItems.Designer.cs">
-      <DependentUpon>202211040321157_HardCodedShopItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211040322516_HardCodedPlayerItems.cs" />
-    <Compile Include="Migrations\202211040322516_HardCodedPlayerItems.Designer.cs">
-      <DependentUpon>202211040322516_HardCodedPlayerItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202211040324012_HardCodedPlayerGames.cs" />
-    <Compile Include="Migrations\202211040324012_HardCodedPlayerGames.Designer.cs">
-      <DependentUpon>202211040324012_HardCodedPlayerGames.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Cap.cs" />
     <Compile Include="Models\GameViewModels\BlackJackViewModel.cs" />
     <Compile Include="Models\GameViewModels\CoinFlipViewModel.cs" />
     <Compile Include="Models\GameViewModels\HighLowViewModel.cs" />
     <Compile Include="Models\GameViewModels\RockPaperScissorsViewModel.cs" />
     <Compile Include="Models\GameViewModels\SlotsViewModel.cs" />
     <Compile Include="Models\GameViewModels\WheelOfFortuneViewModel.cs" />
-    <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PlayerGame.cs" />
     <Compile Include="Models\PlayerItem.cs" />
     <Compile Include="Models\ShopItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -300,16 +254,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Games\BlackJackIndex.cshtml" />
-    <Content Include="Views\GamesDB\Create.cshtml" />
-    <Content Include="Views\GamesDB\Delete.cshtml" />
-    <Content Include="Views\GamesDB\Details.cshtml" />
-    <Content Include="Views\GamesDB\Edit.cshtml" />
-    <Content Include="Views\GamesDB\Index.cshtml" />
-    <Content Include="Views\PlayerGamesDB\Create.cshtml" />
-    <Content Include="Views\PlayerGamesDB\Delete.cshtml" />
-    <Content Include="Views\PlayerGamesDB\Details.cshtml" />
-    <Content Include="Views\PlayerGamesDB\Edit.cshtml" />
-    <Content Include="Views\PlayerGamesDB\Index.cshtml" />
     <Content Include="Views\PlayerItemsDB\Create.cshtml" />
     <Content Include="Views\PlayerItemsDB\Delete.cshtml" />
     <Content Include="Views\PlayerItemsDB\Details.cshtml" />
@@ -325,6 +269,8 @@
     <Content Include="Views\Games\WheelOfFortuneIndex.cshtml" />
     <Content Include="Views\Games\HighLowIndex.cshtml" />
     <Content Include="Views\Games\RockPaperScissorsIndex.cshtml" />
+    <Content Include="Views\ShopItemsDB\IndexBuy.cshtml" />
+    <Content Include="Views\PlayerItemsDB\IndexByUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -345,39 +291,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202210101834495_initial.resx">
       <DependentUpon>202210101834495_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202210110218365_AddedPropIsBannedAndCapsToUsers.resx">
-      <DependentUpon>202210110218365_AddedPropIsBannedAndCapsToUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202210191813061_addedRolesToUsers.resx">
-      <DependentUpon>202210191813061_addedRolesToUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202210191822027_addedAdminAccount.resx">
-      <DependentUpon>202210191822027_addedAdminAccount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202210191830391_addedAdminAccountToAdminRole.resx">
-      <DependentUpon>202210191830391_addedAdminAccountToAdminRole.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202210191833391_seededMultipleUsers.resx">
-      <DependentUpon>202210191833391_seededMultipleUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211010314306_addingDatabases.resx">
-      <DependentUpon>202211010314306_addingDatabases.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211040303039_PopulateGames.resx">
-      <DependentUpon>202211040303039_PopulateGames.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211040314020_ChangesToPlayerModels.resx">
-      <DependentUpon>202211040314020_ChangesToPlayerModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211040321157_HardCodedShopItems.resx">
-      <DependentUpon>202211040321157_HardCodedShopItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211040322516_HardCodedPlayerItems.resx">
-      <DependentUpon>202211040322516_HardCodedPlayerItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202211040324012_HardCodedPlayerGames.resx">
-      <DependentUpon>202211040324012_HardCodedPlayerGames.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

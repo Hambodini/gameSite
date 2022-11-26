@@ -19,6 +19,10 @@ namespace gameSite.Controllers
         {
             return View(db.PlayerItems.ToList());
         }
+        public ActionResult IndexByUser()
+        {
+            return View("IndexByUser", db.PlayerItems.ToList());
+        }
 
         // GET: PlayerItemsDB/Details/5
         public ActionResult Details(int? id)
@@ -46,7 +50,7 @@ namespace gameSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Inventoryid,Userid,Itemid,Quantity,Useremail")] PlayerItem playerItem)
+        public ActionResult Create([Bind(Include = "Id,Userid,Itemid,Quantity,Useremail")] PlayerItem playerItem)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +82,7 @@ namespace gameSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Inventoryid,Userid,Itemid,Quantity,Useremail")] PlayerItem playerItem)
+        public ActionResult Edit([Bind(Include = "Id,Userid,Itemid,Quantity,Useremail")] PlayerItem playerItem)
         {
             if (ModelState.IsValid)
             {
