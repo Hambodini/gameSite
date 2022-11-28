@@ -4,23 +4,24 @@
     ViewBag.Title = "HighLow";
 }
 <div class="jumbotron">
-    <h1>Round: @Model.Round</h1>
-    <p class="lead">Current Player Count: @Model.PlayerCount |||  Player Card Drawn: @Model.PlayerCardDrawn</p>
+    <p class="lead">1st Card Drawn: @Model.HouseCardDrawn</p>
+    <p class="lead">2nd Card Drawn: @Model.PlayerCardDrawn</p>
     <p class="lead">Current Bet: @Model.PlayerBet</p>
-    <p class="lead">Current House Count: @Model.HouseCount ||| House Card Drawn: @Model.HouseCardDrawn</p>
     @if (Model.GameEnd == true)
     {
         if (Model.DidPlayerWin == true)
         {
             <h1>You Win</h1>
+            <a href="@Url.Action("HighLowIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
         else if (Model.DidPlayerWin == false)
         {
             <h1>You Lose</h1>
-        }
-        else
-        {
-            <h1>It was a draw</h1>
+            <a href="@Url.Action("HighLowIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
     }
 </div>
@@ -29,9 +30,23 @@
 {
     <div class="row">
         <div class="col-md-4">
-            @using (Html.BeginForm("BlackJackDraw", "Games"))
+            @if (Model.PlayerChoice == "")
             {
-                <input type="submit" value="Draw" />
+                using (Html.BeginForm("HighLowHigh", "Games"))
+                {
+                    <input type="submit" value="High" class="btn btn-primary"/>
+                }
+                using (Html.BeginForm("HighLowLow", "Games"))
+                {
+                    <input type="submit" value="Low" class="btn btn-primary"/>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("HighLowPlay", "Games"))
+                {
+                    <input type="submit" value="Play" class="btn btn-primary"/>
+                }
             }
         </div>
     </div>
@@ -42,18 +57,10 @@
             <div class="col-md-4">
                 @if (Model.PlayerBet == 0)
                 {
-                    using (Html.BeginForm("BlackJackBet", "Games"))
+                    using (Html.BeginForm("HighLowBet", "Games"))
                     {
                         <input type="text" name="Amount" />
-                        <input type="submit" value="Bet" />
-                    }
-                }
-                @if (Model.DidPlayerDoubleDown == false)
-                {
-                    using (Html.BeginForm("BlackJackDoubleDown", "Games"))
-                    {
-                        <input type="submit" value="Double Down" />
-                            <p>@ViewBag.error</p>
+                        <input type="submit" value="Bet" class="btn btn-primary"/>
                     }
                 }
             </div>

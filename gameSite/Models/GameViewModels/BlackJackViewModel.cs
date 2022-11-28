@@ -19,7 +19,6 @@ namespace gameSite.Models
         public bool DidPlayerDoubleDown { get; set; }
         public bool GameEnd { get; set; }
         public bool WasDraw { get; set; }
-
         public int FindValue(String card)
         {
             int value = 0;
@@ -193,5 +192,66 @@ namespace gameSite.Models
             }
             return value;
         }
+
+        public void Draw()
+        {
+
+            Random rnd = new Random();
+            int amountOfCards;
+            int randomNumber;
+            if (HouseCount <= 17)
+            {
+                //draw a card for the house
+                amountOfCards = Cards.Count - 1;
+                randomNumber = rnd.Next(0, amountOfCards);
+                var houseCard = Cards[randomNumber].ToString();
+                Cards.RemoveAt(randomNumber);
+
+                //add value to house set card drawn
+                var houseCardValue = FindValue(houseCard);
+                HouseCount += houseCardValue;
+                HouseCardDrawn = houseCard;
+                //Model.HouseCount = updatedHouseCount;
+            }
+            else
+            {
+                HouseCardDrawn = "nothing";
+            }
+
+            //draw a card for the player
+            amountOfCards = Cards.Count - 1;
+            randomNumber = rnd.Next(0, amountOfCards);
+            var playerCard = Cards[randomNumber].ToString();
+            Cards.RemoveAt(randomNumber);
+
+            //add value to player and set card drawn
+            var playerCardValue = FindValue(playerCard);
+            PlayerCount += playerCardValue;
+            PlayerCardDrawn = playerCard;
+
+            WinCheck();
+
+            Round++;
+        }
+        public void WinCheck()
+        {
+            if (HouseCount > 21 && PlayerCount <= 21)
+            {
+                DidPlayerWin = true;
+                GameEnd = true;
+
+            }
+            else if (HouseCount <= 21 && PlayerCount > 21)
+            {
+                DidPlayerWin = false;
+                GameEnd = true;
+            }
+            else if (HouseCount == 21 && PlayerCount == 21)
+            {
+                WasDraw = true;
+                GameEnd = true;
+            }
+        }
+
     }
 }

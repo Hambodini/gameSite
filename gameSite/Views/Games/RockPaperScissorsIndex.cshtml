@@ -12,18 +12,16 @@
         if (Model.DidPlayerWin == true)
         {
             <h1>You Win</h1>
-            using (Html.BeginForm("RockPaperScissorsIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
+            <a href="@Url.Action("RockPaperScissorsIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
         else if (Model.DidPlayerWin == false)
         {
             <h1>You Lose</h1>
-            using (Html.BeginForm("RockPaperScissorsIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
+            <a href="@Url.Action("RockPaperScissorsIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
     }
 </div>
@@ -36,22 +34,22 @@
             {
                 using (Html.BeginForm("RockPaperScissorsRock", "Games"))
                 {
-                    <input type="submit" value="Rock" />
+                    <input type="submit" value="Rock" class="btn btn-primary"/>
                 }
                 using (Html.BeginForm("RockPaperScissorsPaper", "Games"))
                 {
-                    <input type="submit" value="Paper" />
+                    <input type="submit" value="Paper" class="btn btn-primary"/>
                 }
                 using (Html.BeginForm("RockPaperScissorsScissors", "Games"))
                 {
-                    <input type="submit" value="Scissors" />
+                    <input type="submit" value="Scissors" class="btn btn-primary"/>
                 }
             }
             else
             {
                 using (Html.BeginForm("RockPaperScissorsDraw", "Games"))
                 {
-                    <input type="submit" value="Play" />
+                    <input type="submit" value="Play" class="btn btn-primary"/>
                 }
             }
         </div>
@@ -66,7 +64,7 @@
                     using (Html.BeginForm("RockPaperScissorsBet", "Games"))
                     {
                         <input type="text" name="Amount" />
-                        <input type="submit" value="Bet" />
+                        <input type="submit" value="Bet" class="btn btn-primary"/>
                     }
                 }
             </div>

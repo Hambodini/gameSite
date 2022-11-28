@@ -12,14 +12,16 @@
         if (Model.DidPlayerWin == true)
         {
             <h1>You Win</h1>
+            <a href="@Url.Action("CoinFlipIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
         else if (Model.DidPlayerWin == false)
         {
             <h1>You Lose</h1>
-            using (Html.BeginForm("CoinFlipIndex", "Games"))
-            {
-                <input type="submit" value="Play Again" />
-            }
+            <a href="@Url.Action("CoinFlipIndex", "Games", null)">
+                <span class="btn btn-primary">Play Again</span>
+            </a>
         }
     }
 </div>
@@ -32,18 +34,18 @@
             {
                 using (Html.BeginForm("CoinFlipHeads", "Games"))
                 {
-                    <input type="submit" value="Heads" />
+                    <input type="submit" value="Heads" class="btn btn-primary"/>
                 }
                 using (Html.BeginForm("CoinFlipTails", "Games"))
                 {
-                    <input type="submit" value="Tails" />
+                    <input type="submit" value="Tails" class="btn btn-primary"/>
                 }
             }
             else
             {
                 using (Html.BeginForm("CoinFlipDraw", "Games"))
                 {
-                    <input type="submit" value="Flip" />
+                    <input type="submit" value="Flip" class="btn btn-primary"/>
                 }
             }
         </div>
@@ -58,7 +60,7 @@
                     using (Html.BeginForm("CoinFlipBet", "Games"))
                     {
                         <input type="text" name="Amount" />
-                        <input type="submit" value="Bet" />
+                        <input type="submit" value="Bet" class="btn btn-primary"/>
                     }
                 }
             </div>
