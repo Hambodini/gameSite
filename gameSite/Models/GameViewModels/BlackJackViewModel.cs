@@ -11,11 +11,10 @@ namespace gameSite.Models
         public int PlayerBet { get; set; }
         public int PlayerCount { get; set; }
         public int HouseCount { get; set; }
-        public  List<String> Cards { get; set; }
+        public List<String> Cards { get; set; }
         public string HouseCardDrawn { get; set; }
         public string PlayerCardDrawn { get; set; }
         public bool DidPlayerWin { get; set; }
-        public bool DidPlayerStand { get; set; }
         public bool DidPlayerDoubleDown { get; set; }
         public bool GameEnd { get; set; }
         public bool WasDraw { get; set; }
@@ -199,7 +198,7 @@ namespace gameSite.Models
             Random rnd = new Random();
             int amountOfCards;
             int randomNumber;
-            if (HouseCount <= 17)
+            if (HouseCount < 17)
             {
                 //draw a card for the house
                 amountOfCards = Cards.Count - 1;
@@ -235,16 +234,39 @@ namespace gameSite.Models
         }
         public void WinCheck()
         {
-            if (HouseCount > 21 && PlayerCount <= 21)
+            if (PlayerCount <= 21)
             {
-                DidPlayerWin = true;
-                GameEnd = true;
-
+                if (HouseCount > 21)
+                {
+                    DidPlayerWin = true;
+                    GameEnd = true;
+                }
+                if (PlayerCount == 21)
+                {
+                    DidPlayerWin = true;
+                    GameEnd = true;
+                }
             }
-            else if (HouseCount <= 21 && PlayerCount > 21)
+            else if (HouseCount <= 21)
             {
-                DidPlayerWin = false;
-                GameEnd = true;
+                if (PlayerCount > 21)
+                {
+                    DidPlayerWin = false;
+                    GameEnd = true;
+                }
+                if (HouseCount == 21)
+                {
+                    DidPlayerWin = false;
+                    GameEnd = true;
+                }
+            }
+            else if (HouseCount > 21)
+            {
+                if (PlayerCount > 21)
+                {
+                    WasDraw = true;
+                    GameEnd = true;
+                }
             }
             else if (HouseCount == 21 && PlayerCount == 21)
             {

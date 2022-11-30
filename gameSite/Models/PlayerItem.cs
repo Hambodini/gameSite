@@ -6,7 +6,7 @@ namespace gameSite.Models
     public class PlayerItem
     {
 
-        public PlayerItem(int Itemid, int ItemName, string Userid, string Useremail, int Quantity)
+        public PlayerItem(int Itemid, string ItemName, string Userid, string Useremail, int Quantity)
         {
             this.Itemid = Itemid;
             this.ItemName = ItemName;

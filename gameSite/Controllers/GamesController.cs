@@ -1,6 +1,8 @@
 ﻿using gameSite.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,6 +11,8 @@ namespace gameSite.Controllers
 {
     public class GamesController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         public static BlackJackViewModel BJControllerModel { get; set; }
         public static CoinFlipViewModel CFControllerModel { get; set; }
         public static HighLowViewModel HLControllerModel { get; set; }
@@ -22,7 +26,6 @@ namespace gameSite.Controllers
             {
                 Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
                 DidPlayerWin = false,
-                DidPlayerStand = false,
                 DidPlayerDoubleDown = false,
                 GameEnd = false,
                 HouseCount = 0,
@@ -35,6 +38,26 @@ namespace gameSite.Controllers
         public ActionResult BlackJackDraw()
         {
             BJControllerModel.Draw();
+
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
+
+            if (BJControllerModel.GameEnd == true)
+            {
+                if (BJControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += BJControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (BJControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= BJControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            
             return View("BlackJackIndex", BJControllerModel);
         }
         public ActionResult BlackJackBet(string Amount)
@@ -257,6 +280,12 @@ namespace gameSite.Controllers
         public ActionResult HighLowLow()
         {
             HLControllerModel.ChooseLow();
+            return View(HLControllerModel);
+        }
+        public ActionResult HighLowPlay()
+        {
+            HLControllerModel.GetPlayerDraw();
+            HLControllerModel.WinCheck();
             return View(HLControllerModel);
         }
         public ActionResult HighLowBet(string Amount)

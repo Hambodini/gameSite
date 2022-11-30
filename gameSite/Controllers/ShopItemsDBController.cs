@@ -44,14 +44,16 @@ namespace gameSite.Controllers
             {
                 currentCap.Amount -= shopItem.Price;
                 db.Entry(currentCap).State = EntityState.Modified;
-                PlayerItem existingRecord = (PlayerItem)(from p in db.PlayerItems where (p.Userid == Userid) select p);
-                if (existingRecord == null)
+                var existingRecord = db.PlayerItems.Where(p => p.Userid == Userid).Where(p => p.Itemid == id).ToList();
+                if (existingRecord.Count == 0)
                 {
                     PlayerItem playerItem = new PlayerItem(Userid, shopItem.Itemid, shopItem.Name, 1, Useremail);
                     db.PlayerItems.Add(playerItem);
                 } else
                 {
-                    existingRecord.Quantity += 1;
+                    var record = db.PlayerItems.Where(p => p.Userid == Userid).FirstOrDefault(p => p.Itemid == id);
+                    record.Quantity += 1;
+                    db.Entry(record).State = EntityState.Modified;
 
                 }
                 db.SaveChanges();
@@ -61,7 +63,7 @@ namespace gameSite.Controllers
                 ViewBag.error = "not enough caps";
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexBuy");
         }
 
         // GET: ShopItemsDB/Details/5

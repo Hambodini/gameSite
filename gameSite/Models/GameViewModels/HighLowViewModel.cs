@@ -295,15 +295,15 @@ namespace gameSite.Models
             int amountOfCards;
             int randomNumber;
 
-                //draw a card for the house
-                amountOfCards = Cards.Count - 1;
-                randomNumber = rnd.Next(0, amountOfCards);
-                var houseCard = Cards[randomNumber].ToString();
-                Cards.RemoveAt(randomNumber);
+            //draw a card for the house
+            amountOfCards = Cards.Count - 1;
+            randomNumber = rnd.Next(0, amountOfCards);
+            var houseCard = Cards[randomNumber].ToString();
+            Cards.RemoveAt(randomNumber);
 
-                var houseCardValue = FindValue(houseCard);
-                HouseCount += houseCardValue;
-                HouseCardDrawn = houseCard;
+            var houseCardValue = FindValue(houseCard);
+            HouseCount += houseCardValue;
+            HouseCardDrawn = houseCard;
 
         }
 
@@ -325,3 +325,4 @@ namespace gameSite.Models
 
         }
     }
+}
