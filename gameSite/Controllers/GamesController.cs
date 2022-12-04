@@ -22,16 +22,7 @@ namespace gameSite.Controllers
         // GET: Games
         public ActionResult BlackJackIndex()
         {
-            BJControllerModel = new BlackJackViewModel
-            {
-                Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
-                DidPlayerWin = false,
-                DidPlayerDoubleDown = false,
-                GameEnd = false,
-                HouseCount = 0,
-                PlayerCount = 0,
-                Round = 1
-            };
+            BJControllerModel = new BlackJackViewModel();
 
             return View(BJControllerModel);
         }
@@ -97,62 +88,49 @@ namespace gameSite.Controllers
         }
         public ActionResult CoinFlipIndex()
         {
-            CoinFlipViewModel Model = new CoinFlipViewModel
-            {
-                Possibles = new List<String> { "Tails", "Heads" },
-                DidPlayerWin = false,
-                GameEnd = false,
-                CoinOutcome = "",
-                PlayerChoice = "",
-            };
+            CFControllerModel = new CoinFlipViewModel();
 
-            CFControllerModel = Model;
             return View(CFControllerModel);
         }
 
         public ActionResult CoinFlipHeads()
         {
 
-            CFControllerModel.PlayerChoice = "Heads";
+            CFControllerModel.ChooseHeads();
             return View("CoinFlipIndex", CFControllerModel);
         }
 
         public ActionResult CoinFlipTails()
         {
 
-            CFControllerModel.PlayerChoice = "Tails";
+            CFControllerModel.ChooseTails();
             return View("CoinFlipIndex", CFControllerModel);
         }
 
         public ActionResult CoinFlipDraw()
         {
-            Random rnd = new Random();
-            int amountOfPossibles;
-            int randomNumber;
+            CFControllerModel.Draw();
 
-            //draw out of possibles
-            amountOfPossibles = CFControllerModel.Possibles.Count - 1;
-            randomNumber = rnd.Next(0, amountOfPossibles);
-            var outcome = CFControllerModel.Possibles[randomNumber].ToString();
-            CFControllerModel.Possibles.RemoveAt(randomNumber);
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
 
-            //show outcome
-            CFControllerModel.CoinOutcome = outcome;
-
-            //win check
-            if (CFControllerModel.PlayerChoice == CFControllerModel.CoinOutcome)
+            if (CFControllerModel.GameEnd == true)
             {
-                CFControllerModel.DidPlayerWin = true;
-                CFControllerModel.GameEnd = true;
-            }
-            else
-            {
-                CFControllerModel.DidPlayerWin = false;
-                CFControllerModel.GameEnd = true;
+                if (CFControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += CFControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (CFControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= CFControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
 
             return View("CoinFlipIndex", CFControllerModel);
-
         }
 
         public ActionResult CoinFlipBet(string Amount)
@@ -175,62 +153,57 @@ namespace gameSite.Controllers
             return View("CoinFlipIndex", CFControllerModel);
 
         }
+
         public ActionResult RockPaperScissorsIndex()
         {
-            RockPaperScissorsViewModel Model = new RockPaperScissorsViewModel
-            {
-                Possibles = new List<String> { "Rock", "Paper", "Scissors" },
-                DidPlayerWin = false,
-                GameEnd = false,
-                Outcome = "",
-                PlayerChoice = "",
-            };
+            RPSControllerModel = new RockPaperScissorsViewModel();
 
-            RPSControllerModel = Model;
             return View(RPSControllerModel);
         }
 
         public ActionResult RockPaperScissorsRock()
         {
 
-            RPSControllerModel.PlayerChoice = "Rock";
-            RPSControllerModel.Possibles.Remove("Rock");
+            RPSControllerModel.ChooseRock();
             return View("RockPaperScissorsIndex", RPSControllerModel);
         }
 
         public ActionResult RockPaperScissorsPaper()
         {
 
-            RPSControllerModel.PlayerChoice = "Paper";
-            RPSControllerModel.Possibles.Remove("Paper");
+            RPSControllerModel.ChoosePaper();
             return View("RockPaperScissorsIndex", RPSControllerModel);
         }
 
         public ActionResult RockPaperScissorsScissors()
         {
 
-            RPSControllerModel.PlayerChoice = "Scissors";
-            RPSControllerModel.Possibles.Remove("Scissors");
+            RPSControllerModel.ChooseScissors();
             return View("RockPaperScissorsIndex", RPSControllerModel);
         }
 
         public ActionResult RockPaperScissorsDraw()
         {
-            Random rnd = new Random();
-            int amountOfPossibles;
-            int randomNumber;
+            RPSControllerModel.Draw();
 
-            //draw out of possibles
-                amountOfPossibles = RPSControllerModel.Possibles.Count - 1;
-            randomNumber = rnd.Next(0, amountOfPossibles);
-            var outcome = RPSControllerModel.Possibles[randomNumber].ToString();
-            RPSControllerModel.Possibles.RemoveAt(randomNumber);
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
 
-            //show outcome
-            RPSControllerModel.Outcome = outcome;
-
-            //win check
-            RPSControllerModel.WinCheck();
+            if (RPSControllerModel.GameEnd == true)
+            {
+                if (RPSControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += RPSControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (RPSControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= RPSControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
 
             return View("RockPaperScissorsIndex", RPSControllerModel);
 
@@ -258,35 +231,44 @@ namespace gameSite.Controllers
         }
         public ActionResult HighLowIndex()
         {
-            HLControllerModel = new HighLowViewModel
-            {
-                Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
-                DidPlayerWin = false,
-                DidPlayerStand = false,
-                GameEnd = false,
-                HouseCount = 0,
-                PlayerCount = 0,
-                PlayerCardDrawn = "Hidden",
-                PlayerChoice = ""
-            };
+            HLControllerModel = new HighLowViewModel();
+
             HLControllerModel.GetHouseDraw();
             return View(HLControllerModel);
         }
         public ActionResult HighLowHigh()
         {
             HLControllerModel.ChooseHigh();
-            return View(HLControllerModel);
+            return View("HighLowIndex", HLControllerModel);
         }
         public ActionResult HighLowLow()
         {
             HLControllerModel.ChooseLow();
-            return View(HLControllerModel);
+            return View("HighLowIndex", HLControllerModel);
         }
         public ActionResult HighLowPlay()
         {
             HLControllerModel.GetPlayerDraw();
-            HLControllerModel.WinCheck();
-            return View(HLControllerModel);
+
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
+
+            if (HLControllerModel.GameEnd == true)
+            {
+                if (HLControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += HLControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (HLControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= HLControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            return View("HighLowIndex", HLControllerModel);
         }
         public ActionResult HighLowBet(string Amount)
         {
@@ -310,37 +292,106 @@ namespace gameSite.Controllers
         }
         public ActionResult SlotsIndex()
         {
-            SlotsViewModel Model = new SlotsViewModel
-            {
-                Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
-                DidPlayerWin = false,
-                DidPlayerStand = false,
-                DidPlayerDoubleDown = false,
-                GameEnd = false,
-                HouseCount = 0,
-                PlayerCount = 0,
-                Round = 1
-            };
+            SControllerModel = new SlotsViewModel();
 
-            SControllerModel = Model;
             return View(SControllerModel);
+        }
+        public ActionResult SlotsSpin()
+        {
+            SControllerModel.Spin();
+
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
+
+            if (SControllerModel.GameEnd == true)
+            {
+                if (SControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += SControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (SControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= SControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+            return View("SlotsIndex", SControllerModel);
+        }
+        public ActionResult SlotsBet(string Amount)
+        {
+            int BetAmount = 0;
+            try
+            {
+                BetAmount = int.Parse(Amount);
+            }
+            catch (Exception)
+            {
+                ViewBag.error = "Your bet has to be a whole number";
+            }
+
+            if (BetAmount != 0)
+            {
+                SControllerModel.PlayerBet = BetAmount;
+            }
+
+            return View("SlotsIndex", SControllerModel);
+
         }
         public ActionResult WheelOfFortuneIndex()
         {
-            WheelOfFortuneViewModel Model = new WheelOfFortuneViewModel
-            {
-                Cards = new List<String> { "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "sj", "sq", "sk", "sa", "h2", "h3", "h4", "h5", "h6", "h7", "h8", "h9", "h10", "hj", "hq", "hk", "ha", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "cj", "cq", "ck", "ca", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9", "d10", "dj", "dq", "dk", "da" },
-                DidPlayerWin = false,
-                DidPlayerStand = false,
-                DidPlayerDoubleDown = false,
-                GameEnd = false,
-                HouseCount = 0,
-                PlayerCount = 0,
-                Round = 1
-            };
+            WOFControllerModel = new WheelOfFortuneViewModel();
 
-            WOFControllerModel = Model;
             return View(WOFControllerModel);
+        }
+        public ActionResult WheelOfFortuneSpin()
+        {
+
+            WOFControllerModel.Spin();
+
+            var Userid = User.Identity.GetUserId();
+            var currentCap = db.Caps.Find(Userid);
+
+            if (WOFControllerModel.GameEnd == true)
+            {
+                if (WOFControllerModel.DidPlayerWin == true)
+                {
+                    currentCap.Amount += WOFControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                else if (WOFControllerModel.DidPlayerWin == false)
+                {
+                    currentCap.Amount -= WOFControllerModel.PlayerBet;
+                    db.Entry(currentCap).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+            return View("SlotsIndex", WOFControllerModel);
+        }
+        public ActionResult WheelOfFortuneBet(string Amount)
+        {
+            int BetAmount = 0;
+            try
+            {
+                BetAmount = int.Parse(Amount);
+            }
+            catch (Exception)
+            {
+                ViewBag.error = "Your bet has to be a whole number";
+            }
+
+            if (BetAmount != 0)
+            {
+                WOFControllerModel.PlayerBet = BetAmount;
+            }
+
+            return View("WheelOfFortuneIndex", WOFControllerModel);
+
         }
     }
 }
